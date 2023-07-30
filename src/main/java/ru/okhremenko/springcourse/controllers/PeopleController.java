@@ -45,7 +45,7 @@ public class PeopleController {
 
     @PostMapping()                                                    //Should always be right after @Valid
     public String create(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
-        personValidator.validate(person, bindingResult);//В bindingResult храним ошибки со всех валидаций
+        personValidator.validate(person, bindingResult);        //В bindingResult храним ошибки со всех валидаций
         if (bindingResult.hasErrors())
             return "people/new";
         personDAO.save(person);

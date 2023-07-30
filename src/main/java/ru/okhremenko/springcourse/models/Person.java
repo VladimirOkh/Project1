@@ -1,62 +1,42 @@
 package ru.okhremenko.springcourse.models;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class Person {
+
     private int id;
 
     @NotEmpty(message = "Name should not be empty")
-    @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters")
-    private String name;
+    @Size(min = 2, max = 150, message = "Name should be between 2 and 150 characters")
+    private String full_name;
 
-    @Min(value = 1, message = "Age should be greater than 0")
-    private int age;
-
-    @NotEmpty(message = "Email should not be empty")
-    @Email(message = "Email should be valid")
-    private String email;
-
-    //Страна, Город, Индекс (6 цифр)
-    @Pattern(regexp = "^[A-Za-z]+, [A-Za-z]+, \\d{6}$",
-            message = "Your address should be in this format: Country, City, Postal Code(6 digits)")
-    private String address;
+    @Min(value = 1900, message = "Year of birth should be greater than 1900")
+    private int year_of_birth;
 
     public Person() {
 
     }
 
-    public Person(int id, String name) {
+    public Person(int id, String full_name) {
         this.id = id;
-        this.name = name;
+        this.full_name = full_name;
     }
 
-    public Person(int id, String name, int age, String email, String address) {
+    public Person(int id, String full_name, int year_of_birth) {
         this.id = id;
-        this.name = name;
-        this.age = age;
-        this.email = email;
-        this.address = address;
+        this.full_name = full_name;
+        this.year_of_birth = year_of_birth;
     }
 
-    public int getAge() {
-        return age;
+    public int getYear_of_birth() {
+        return year_of_birth;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setYear_of_birth(int year_of_birth) {
+        this.year_of_birth = year_of_birth;
     }
 
     public int getId() {
@@ -67,19 +47,12 @@ public class Person {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFull_name() {
+        return full_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 }
