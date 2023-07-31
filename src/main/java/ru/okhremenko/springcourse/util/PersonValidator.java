@@ -26,7 +26,7 @@ public class PersonValidator implements Validator {
     public void validate(Object o, Errors errors) {
         Person person = (Person) o;
         //Проверить есть ли человек с таким же Name в БД
-        if (personDAO.show(person.getFull_name()).isPresent()) {
+        if (personDAO.show(person.getFullName()).isPresent()) {
             errors.rejectValue("full_name", "","This name is already taken");
         }
     }

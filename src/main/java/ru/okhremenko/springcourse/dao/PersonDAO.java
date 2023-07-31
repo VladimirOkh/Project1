@@ -37,12 +37,12 @@ public class PersonDAO {
     }
 
     public void save(Person person) {
-        jdbcTemplate.update("INSERT INTO Person(full_name, year_of_birth) VALUES (? ,?)", person.getFull_name(), person.getYear_of_birth());
+        jdbcTemplate.update("INSERT INTO Person(full_Name, year_of_birth) VALUES (? ,?)", person.getFullName(), person.getYearOfBirth());
     }
 
     public void update(int id, Person updatedPerson) {
         jdbcTemplate.update("UPDATE Person SET full_name=?, year_of_birth=? WHERE id=?",
-                updatedPerson.getFull_name(), updatedPerson.getYear_of_birth(), id);
+                updatedPerson.getFullName(), updatedPerson.getYearOfBirth(), id);
     }
 
     public void delete(int id) {
@@ -59,7 +59,7 @@ public class PersonDAO {
         long before = System.currentTimeMillis();
 
         for (Person person : people) {
-            jdbcTemplate.update("INSERT INTO Person(full_name, year_of_birth) VALUES (? ,?)", person.getFull_name(), person.getYear_of_birth());
+            jdbcTemplate.update("INSERT INTO Person(full_name, year_of_birth) VALUES (? ,?)", person.getFullName(), person.getYearOfBirth());
         }
 
         long after = System.currentTimeMillis();
@@ -76,8 +76,8 @@ public class PersonDAO {
                     @Override
                     public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
                         preparedStatement.setInt(1, people.get(i).getId());
-                        preparedStatement.setString(2, people.get(i).getFull_name());
-                        preparedStatement.setInt(3, people.get(i).getYear_of_birth());
+                        preparedStatement.setString(2, people.get(i).getFullName());
+                        preparedStatement.setInt(3, people.get(i).getYearOfBirth());
                     }
 
                     @Override

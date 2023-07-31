@@ -26,7 +26,7 @@ import java.util.Objects;
 public class SpringConfig implements WebMvcConfigurer {
 
     private final ApplicationContext applicationContext;
-    private final Environment environment; //С помощью этого бина мы получаем доступ к св-вам который подгрузились в приложение
+    private final Environment environment; //С помощью этого бина мы получаем доступ к св-вам которые подгрузились в приложение
 
     @Autowired
     public SpringConfig(ApplicationContext applicationContext, Environment environment) {
