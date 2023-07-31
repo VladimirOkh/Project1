@@ -7,7 +7,20 @@
 <body>
 
 <p th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}">VALUE</p>
-<p th:text="${book.getId()}">VALUE</p>
+
+<form th:method="PATCH" th:action="@{/books/{id}(id=${book.getId()})}">
+    <div>Эта книга свободна. Кому назначить ее?</div>
+    <label for="person">Выберите человека:</label>
+    <select th:object="${person}" th:field="*{id}" id="person">
+        <option th:each="person:${people}" th:value="${person.getId()}" th:text="${person.getFullName()}"></option>
+    </select>
+    <input type="submit" value="Назначить книгу"/>
+</form>
+
+<!--<form th:method="PATCH" th:action="@{/books/{id}(id=${book.getId()})}">-->
+<!--    <label for="person">Книга сейчас у:</label>-->
+<!--    <div th:text="${person.getFullName()}">book</div>-->
+<!--</form>-->
 
 <a th:href="@{/books/{id}/edit(id=${book.getId()})}">Редактировать</a>
 <br/>
