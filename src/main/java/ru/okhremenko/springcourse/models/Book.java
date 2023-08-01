@@ -1,16 +1,21 @@
 package ru.okhremenko.springcourse.models;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 public class Book {
     private int id;
 
-    @Size(min = 2, max = 150, message = "Name should be between 2 and 150 characters")
+    @NotEmpty
+    @Size(min = 2, max = 150, message = "Название должно быть между 2 и 150 символами")
     private String name;
-
-    @Size(min = 2, max = 150, message = "Author name should be between 2 and 150 characters")
+    @NotEmpty
+    @Size(min = 2, max = 150, message = "Имя автора должно быть между 2 и 150 символами")
     private String author;
-
+    @NotEmpty
+    @Min(value = 1500, message = "Книга должна быть написана не ранее 1500 года")
     private int year;
 
     public Book() {

@@ -7,7 +7,21 @@
 <body>
 
 <p th:text="${person.getFullName() + ', ' + person.getYearOfBirth()}">VALUE</p>
-<p th:text="${person.getId()}">VALUE</p>
+
+<div th:if="${books.isEmpty()}">
+    <p>Человек пока не взял ни одной книги</p>
+    <hr/>
+</div>
+
+<div th:if="${!books.isEmpty()}">
+    <hr/>
+    <b>Книги:</b>
+    <br>
+    <div th:each="book:${books}">
+         <div th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getYear()}">book</div>
+    </div>
+    <hr/>
+</div>
 
 <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Редактировать</a>
 <br/>

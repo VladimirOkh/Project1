@@ -1,14 +1,12 @@
 package ru.okhremenko.springcourse.controllers;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.okhremenko.springcourse.dao.BookDAO;
 import ru.okhremenko.springcourse.dao.PersonDAO;
 import ru.okhremenko.springcourse.models.Book;
 import ru.okhremenko.springcourse.models.Person;
-import ru.okhremenko.springcourse.util.PersonValidator;
 
 import javax.validation.Valid;
 import java.util.Optional;
@@ -75,14 +73,16 @@ public class BooksController {
         bookDAO.delete(id);
         return "redirect:/books";
     }
+
     @PatchMapping("{id}/release")
     public String release(@PathVariable("id") int id) {
         bookDAO.release(id);
         return "redirect:/books/" + id;
     }
+
     @PatchMapping("/{id}/assign")
-    public String assign(@PathVariable("id") int id, @ModelAttribute("book")Book book){
-        bookDAO.setBookHolder(id, book);
+    public String assign(@PathVariable("id") int id, @ModelAttribute("person") Person person) {
+        bookDAO.setBookHolder(id, person);
         return "redirect:/books/" + id;
     }
 

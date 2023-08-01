@@ -46,12 +46,13 @@ public class BookDAO {
     }
 
     public Optional<Person> getPersonByBookId(int id) {
-        return jdbcTemplate.query("select * from person join book on person.id = Book.holder_id", new Object[]{id}, new BeanPropertyRowMapper<>(Person.class))
-                .stream().findAny();
+        return jdbcTemplate.query("select person.* from book join person on person.id = Book.holder_id where book.id=?",
+                new Object[]{id}, new BeanPropertyRowMapper<>(Person.class)).stream().findAny();
+
     }
 
-    public void setBookHolder(int id, Book book) {
-        jdbcTemplate.update("UPDATE Book SET holder_id=? where id=?", id, book.getId());
+    public void setBookHolder(int id, Person person) {
+        jdbcTemplate.update("UPDATE Book SET holder_id=? where id=?", person.getId(), id);
     }
 
     public void release(int id) {

@@ -17,7 +17,7 @@ public class PersonValidator implements Validator {
         this.personDAO = personDAO;
     }
 
-    @Override //С помощью этого метода надо дать понять валидатору на каком классе он работает
+    @Override
     public boolean supports(Class<?> aClass) {
         return Person.class.equals(aClass);
     }
@@ -26,7 +26,7 @@ public class PersonValidator implements Validator {
     public void validate(Object o, Errors errors) {
         Person person = (Person) o;
         //Проверить есть ли человек с таким же Name в БД
-        if (personDAO.show(person.getFullName()).isPresent()) {
+        if (personDAO.getPersonByFullName(person.getFullName()).isPresent()) {
             errors.rejectValue("fullName", "","Человек с таким ФИО уже зарегистрирован");
         }
     }
