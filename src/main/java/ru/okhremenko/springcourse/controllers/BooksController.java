@@ -34,7 +34,7 @@ public class BooksController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, @ModelAttribute("person") Person person, Model model) {
         model.addAttribute("book", bookService.findOne(id));
-        Optional<Person> holder = peopleService.findByBooksOwnerId(id);
+        Optional<Person> holder = bookService.getOwnerByBook(bookService.findOne(id));
         if (holder.isPresent())
             model.addAttribute("holder", holder.get());
         else
@@ -64,7 +64,7 @@ public class BooksController {
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("book") @Valid Book book, @PathVariable("id") int id) {
 
-        bookService.update(id, book);
+        bookService.update(book);
         return "redirect:/books";
     }
 
@@ -76,7 +76,7 @@ public class BooksController {
 
     @PatchMapping("{id}/release")
     public String release(@PathVariable("id") int id) {
-        bookService.release(id, bookService.findOne(id));
+        bookService.release(bookService.findOne(id));
         return "redirect:/books/" + id;
     }
 

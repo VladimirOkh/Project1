@@ -13,15 +13,14 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotEmpty
+    @NotEmpty(message = "Название книги не должно быть пустым")
     @Size(min = 2, max = 150, message = "Название должно быть между 2 и 150 символами")
     private String name;
 
-    @NotEmpty
+    @NotEmpty(message = "Автор не должен быть пустым")
     @Size(min = 2, max = 150, message = "Имя автора должно быть между 2 и 150 символами")
     private String author;
 
-    @NotEmpty
     @Min(value = 1500, message = "Книга должна быть написана не ранее 1500 года")
     private int year;
 

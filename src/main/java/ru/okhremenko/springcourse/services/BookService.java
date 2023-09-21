@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 public class BookService {
 
     private final BooksRepository booksRepository;
@@ -32,18 +33,22 @@ public class BookService {
         return foundBook.orElse(null);
     }
 
+    public Optional<Person> getOwnerByBook(Book book) {
+        return Optional.ofNullable(book.getOwner());
+    }
+
     @Transactional
     public void save(Book book) {
         booksRepository.save(book);
     }
-
     @Transactional
-    public void update(int id, Book updatedBook) {
-        updatedBook.setId(id);
+    public void update(Book updatedBook) {
+        //updatedBook.setId(id);
         booksRepository.save(updatedBook);
     }
+
     @Transactional
-    public void release(int id, Book updatedBook) {
+    public void release(Book updatedBook) {
         updatedBook.setOwner(null);
         booksRepository.save(updatedBook);
     }

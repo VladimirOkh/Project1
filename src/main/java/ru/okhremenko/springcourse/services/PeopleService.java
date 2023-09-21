@@ -1,12 +1,15 @@
 package ru.okhremenko.springcourse.services;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.okhremenko.springcourse.models.Book;
 import ru.okhremenko.springcourse.models.Person;
 import ru.okhremenko.springcourse.repositories.PeopleRepository;
 
-import java.util.Date;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +27,7 @@ public class PeopleService {
         return peopleRepository.findAll();
     }
 
-    public Person findByFullName(String name) {
+    public Optional<Person> getPersonByFullName(String name) {
         return peopleRepository.findByFullName(name);
     }
 
@@ -33,9 +36,20 @@ public class PeopleService {
         return foundPerson.orElse(null);
     }
 
-    public Optional<Person> findByBooksOwnerId(int id) {
-        return peopleRepository.findByBooksOwnerId(id);
+    public List<Book> getBooksByPersonId(int id) {
+        Optional<Person> person = peopleRepository.findById(id);
+
+        if (person.isPresent()) {
+//            Hibernate.initialize(person.get().getBooks());
+//
+//            person.get().getBooks().forEach();
+            return person.get().getBooks();
+
+        }
+        else return Collections.emptyList();
+
     }
+
 
     @Transactional
     public void save(Person person) {
