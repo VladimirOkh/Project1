@@ -4,17 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ru.okhremenko.springcourse.dao.PersonDAO;
 import ru.okhremenko.springcourse.models.Person;
+import ru.okhremenko.springcourse.services.PeopleService;
 
 @Component
 public class PersonValidator implements Validator {
 
-    private final PersonDAO personDAO;
+    private final PeopleService peopleService;
 
     @Autowired
-    public PersonValidator(PersonDAO personDAO) {
-        this.personDAO = personDAO;
+    public PersonValidator(PeopleService peopleService) {
+        this.peopleService = peopleService;
     }
 
     @Override
@@ -26,8 +26,8 @@ public class PersonValidator implements Validator {
     public void validate(Object o, Errors errors) {
         Person person = (Person) o;
         //Проверить есть ли человек с таким же Name в БД
-        if (personDAO.getPersonByFullName(person.getFullName()).isPresent()) {
-            errors.rejectValue("fullName", "","Человек с таким ФИО уже зарегистрирован");
-        }
+//        if (peopleService.findByFullName(person.getFullName())) {
+//            errors.rejectValue("fullName", "","Человек с таким ФИО уже зарегистрирован");
+//        }
     }
 }

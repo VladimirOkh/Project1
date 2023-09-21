@@ -2,21 +2,32 @@ package ru.okhremenko.springcourse.models;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
-
+@Entity
+@Table(name = "Book")
 public class Book {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotEmpty
     @Size(min = 2, max = 150, message = "Название должно быть между 2 и 150 символами")
     private String name;
+
     @NotEmpty
     @Size(min = 2, max = 150, message = "Имя автора должно быть между 2 и 150 символами")
     private String author;
+
     @NotEmpty
     @Min(value = 1500, message = "Книга должна быть написана не ранее 1500 года")
     private int year;
+
+    @JoinColumn(name = "holder_id", referencedColumnName = "id")
+    @ManyToOne
+    private Person owner;
 
     public Book() {
     }
@@ -58,5 +69,24 @@ public class Book {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public Person getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Person owner) {
+        this.owner = owner;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", author='" + author + '\'' +
+                ", year=" + year +
+                ", owner=" + owner +
+                '}';
     }
 }
