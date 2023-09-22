@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface BooksRepository extends JpaRepository<Book, Integer> {
 
-    List<Book> getBooksByOwnerId(int id);
+    List<Book> findBooksByNameStartingWith(String name);
 
     List<Book> findByOwnerId(int id);
 

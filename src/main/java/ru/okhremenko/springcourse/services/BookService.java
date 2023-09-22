@@ -31,6 +31,10 @@ public class BookService {
         return booksRepository.findByOwnerId(id);
     }
 
+    public List<Book> getBooksStartingWith(String name) {
+        return booksRepository.findBooksByNameStartingWith(name);
+    }
+
     public Book findOne(int id) {
         Optional<Book> foundBook = booksRepository.findById(id);
         return foundBook.orElse(null);
@@ -46,8 +50,12 @@ public class BookService {
     }
 
     @Transactional
-    public void update(Book updatedBook) {
-        //updatedBook.setId(id);
+    public void update(int id, Book updatedBook) {
+        Book bookToBeUpdated = booksRepository.findById(id).get();
+
+        updatedBook.setId(id);
+        updatedBook.setOwner(bookToBeUpdated.getOwner());
+
         booksRepository.save(updatedBook);
     }
 

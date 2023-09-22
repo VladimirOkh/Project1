@@ -10,6 +10,7 @@ import ru.okhremenko.springcourse.services.BookService;
 import ru.okhremenko.springcourse.services.PeopleService;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -28,12 +29,24 @@ public class BooksController {
     @GetMapping()
     public String index(Model model,
                         @RequestParam(name = "page", required = false, defaultValue = "0") int page,
-                        @RequestParam(name = "books_per_page", required = false, defaultValue = "5") int booksPerPage,
-                        @RequestParam(name = "sort_by_year", required = false, defaultValue = "false") boolean sort_by_year) {
+                        @RequestParam(name = "books_per_page", required = false, defaultValue = "10") int booksPerPage,
+                        @RequestParam(name = "sort_by_year", required = false, defaultValue = "true") boolean sort_by_year) {
         model.addAttribute("books", bookService.findAll(page, booksPerPage, sort_by_year));
 
         return "books/index";
     }
+
+    @GetMapping("/search")
+    public String search() {
+        return "books/search";
+    }
+    @PostMapping("/search")
+    public String makeSearch(Model model,
+                             @RequestParam(value = "query", required = false) String query) {
+        model.addAttribute("books", bookService.getBooksStartingWith(query));
+        return "books/search";
+    }
+
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, @ModelAttribute("person") Person person, Model model) {
@@ -68,7 +81,7 @@ public class BooksController {
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("book") @Valid Book book, @PathVariable("id") int id) {
 
-        bookService.update(book);
+        bookService.update(id, book);
         return "redirect:/books";
     }
 
