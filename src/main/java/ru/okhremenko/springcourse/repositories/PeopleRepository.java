@@ -12,5 +12,4 @@ public interface PeopleRepository extends JpaRepository<Person, Integer> {
     Optional<Person> findByFullName(String name);
 
 
-
 }

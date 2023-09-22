@@ -19,13 +19,13 @@ public class PeopleController {
     private final PeopleService peopleService;
     private final BookService bookService;
     private final PersonValidator personValidator;
+
     @Autowired
     public PeopleController(PeopleService peopleService, BookService bookService, PersonValidator personValidator) {
         this.peopleService = peopleService;
         this.bookService = bookService;
         this.personValidator = personValidator;
     }
-
 
 
     @GetMapping()

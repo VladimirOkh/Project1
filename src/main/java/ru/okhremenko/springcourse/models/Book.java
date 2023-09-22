@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+
 @Entity
 @Table(name = "Book")
 public class Book {
@@ -14,11 +15,11 @@ public class Book {
     private int id;
 
     @NotEmpty(message = "Название книги не должно быть пустым")
-    @Size(min = 2, max = 150, message = "Название должно быть между 2 и 150 символами")
+    @Size(min = 2, max = 150, message = "Название должно быть от 2 до 150 символов")
     private String name;
 
     @NotEmpty(message = "Автор не должен быть пустым")
-    @Size(min = 2, max = 150, message = "Имя автора должно быть между 2 и 150 символами")
+    @Size(min = 2, max = 150, message = "Имя автора должно быть от 2 до 150 символов")
     private String author;
 
     @Min(value = 1500, message = "Книга должна быть написана не ранее 1500 года")

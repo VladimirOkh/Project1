@@ -18,6 +18,7 @@ public class BooksController {
 
     private final BookService bookService;
     private final PeopleService peopleService;
+
     @Autowired
     public BooksController(BookService bookService, PeopleService peopleService) {
         this.bookService = bookService;
@@ -25,8 +26,10 @@ public class BooksController {
     }
 
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("books", bookService.findAll());
+    public String index(Model model,
+                        @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+                        @RequestParam(name = "books_per_page", required = false, defaultValue = "3") int booksPerPage) {
+        model.addAttribute("books", bookService.findAll(page, booksPerPage));
 
         return "books/index";
     }

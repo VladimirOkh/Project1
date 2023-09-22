@@ -1,6 +1,5 @@
 package ru.okhremenko.springcourse.services;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,7 +7,6 @@ import ru.okhremenko.springcourse.models.Book;
 import ru.okhremenko.springcourse.models.Person;
 import ru.okhremenko.springcourse.repositories.PeopleRepository;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +16,7 @@ import java.util.Optional;
 public class PeopleService {
 
     private final PeopleRepository peopleRepository;
+
     @Autowired
     public PeopleService(PeopleRepository peopleRepository) {
         this.peopleRepository = peopleRepository;
@@ -45,8 +44,7 @@ public class PeopleService {
 //            person.get().getBooks().forEach();
             return person.get().getBooks();
 
-        }
-        else return Collections.emptyList();
+        } else return Collections.emptyList();
 
     }
 
@@ -55,6 +53,7 @@ public class PeopleService {
     public void save(Person person) {
         peopleRepository.save(person);
     }
+
     @Transactional
     public void update(int id, Person updatedPerson) {
         updatedPerson.setId(id);

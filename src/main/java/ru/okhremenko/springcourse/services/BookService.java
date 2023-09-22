@@ -1,6 +1,7 @@
 package ru.okhremenko.springcourse.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.okhremenko.springcourse.models.Book;
@@ -15,13 +16,14 @@ import java.util.Optional;
 public class BookService {
 
     private final BooksRepository booksRepository;
+
     @Autowired
     public BookService(BooksRepository booksRepository) {
         this.booksRepository = booksRepository;
     }
 
-    public List<Book> findAll() {
-        return booksRepository.findAll();
+    public List<Book> findAll(int page, int booksPerPage) {
+        return booksRepository.findAll(PageRequest.of(page, booksPerPage)).getContent();
     }
 
     public List<Book> findByOwnerId(int id) {
@@ -41,6 +43,7 @@ public class BookService {
     public void save(Book book) {
         booksRepository.save(book);
     }
+
     @Transactional
     public void update(Book updatedBook) {
         //updatedBook.setId(id);
