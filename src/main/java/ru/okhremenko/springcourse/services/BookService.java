@@ -2,6 +2,7 @@ package ru.okhremenko.springcourse.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.okhremenko.springcourse.models.Book;
@@ -22,8 +23,8 @@ public class BookService {
         this.booksRepository = booksRepository;
     }
 
-    public List<Book> findAll(int page, int booksPerPage) {
-        return booksRepository.findAll(PageRequest.of(page, booksPerPage)).getContent();
+    public List<Book> findAll(int page, int booksPerPage, boolean sort) {
+        return booksRepository.findAll(PageRequest.of(page, booksPerPage, Sort.by("year"))).getContent();
     }
 
     public List<Book> findByOwnerId(int id) {
