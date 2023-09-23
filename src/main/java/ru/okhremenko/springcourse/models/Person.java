@@ -74,7 +74,6 @@ public class Person {
                 "id=" + id +
                 ", fullName='" + fullName + '\'' +
                 ", yearOfBirth=" + yearOfBirth +
-                ", items=" + books +
                 '}';
     }
 }

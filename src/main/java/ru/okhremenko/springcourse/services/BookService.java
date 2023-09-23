@@ -9,6 +9,7 @@ import ru.okhremenko.springcourse.models.Book;
 import ru.okhremenko.springcourse.models.Person;
 import ru.okhremenko.springcourse.repositories.BooksRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,10 +26,6 @@ public class BookService {
 
     public List<Book> findAll(int page, int booksPerPage, boolean sort) {
         return booksRepository.findAll(PageRequest.of(page, booksPerPage, Sort.by("year"))).getContent();
-    }
-
-    public List<Book> findByOwnerId(int id) {
-        return booksRepository.findByOwnerId(id);
     }
 
     public List<Book> getBooksStartingWith(String name) {
@@ -62,12 +59,14 @@ public class BookService {
     @Transactional
     public void release(Book updatedBook) {
         updatedBook.setOwner(null);
+        updatedBook.setTakenAt(null);
         booksRepository.save(updatedBook);
     }
 
     @Transactional
     public void setOwner(Book updatedBook, Person owner) {
         updatedBook.setOwner(owner);
+        updatedBook.setTakenAt(new Date());
         booksRepository.save(updatedBook);
     }
 

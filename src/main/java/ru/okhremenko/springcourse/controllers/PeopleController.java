@@ -17,13 +17,11 @@ import javax.validation.Valid;
 public class PeopleController {
 
     private final PeopleService peopleService;
-    private final BookService bookService;
     private final PersonValidator personValidator;
 
     @Autowired
-    public PeopleController(PeopleService peopleService, BookService bookService, PersonValidator personValidator) {
+    public PeopleController(PeopleService peopleService, PersonValidator personValidator) {
         this.peopleService = peopleService;
-        this.bookService = bookService;
         this.personValidator = personValidator;
     }
 
@@ -39,7 +37,7 @@ public class PeopleController {
     public String show(@PathVariable("id") int id,
                        Model model) {
         model.addAttribute("person", peopleService.findOne(id));
-        model.addAttribute("books", bookService.findByOwnerId(id));
+        model.addAttribute("books", peopleService.getBooksByPersonId(id));
         return "people/show";
     }
 

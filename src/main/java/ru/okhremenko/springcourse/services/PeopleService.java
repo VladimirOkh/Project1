@@ -1,5 +1,6 @@
 package ru.okhremenko.springcourse.services;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,6 +9,7 @@ import ru.okhremenko.springcourse.models.Person;
 import ru.okhremenko.springcourse.repositories.PeopleRepository;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +34,7 @@ public class PeopleService {
 
     public Person findOne(int id) {
         Optional<Person> foundPerson = peopleRepository.findById(id);
+        foundPerson.ifPresent(person -> Hibernate.initialize(person.getBooks()));
         return foundPerson.orElse(null);
     }
 
@@ -39,9 +42,13 @@ public class PeopleService {
         Optional<Person> person = peopleRepository.findById(id);
 
         if (person.isPresent()) {
-//            Hibernate.initialize(person.get().getBooks());
-//
-//            person.get().getBooks().forEach();
+            Hibernate.initialize(person.get().getBooks());
+            person.get().getBooks().forEach(book -> {
+                long diffInMs = Math.abs(book.getTakenAt().getTime() - new Date().getTime());
+
+                if (diffInMs > 864000000)
+                    book.setExpired(true);
+            });
             return person.get().getBooks();
 
         } else return Collections.emptyList();

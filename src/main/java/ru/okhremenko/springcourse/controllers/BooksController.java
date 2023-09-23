@@ -10,7 +10,6 @@ import ru.okhremenko.springcourse.services.BookService;
 import ru.okhremenko.springcourse.services.PeopleService;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -40,6 +39,7 @@ public class BooksController {
     public String search() {
         return "books/search";
     }
+
     @PostMapping("/search")
     public String makeSearch(Model model,
                              @RequestParam(value = "query", required = false) String query) {
